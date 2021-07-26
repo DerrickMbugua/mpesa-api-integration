@@ -19,4 +19,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('v1/access/token', [MpesaController::class, "generateAccessToken"]);
+Route::post('v1/access-token', [MpesaController::class, "generateAccessToken"]);
+Route::post('v1/token', [MpesaController::class, "token"]);
+Route::post('v1/stkpush', [MpesaController::class, "stkPush"]);
