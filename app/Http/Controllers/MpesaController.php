@@ -53,6 +53,35 @@ class MpesaController extends Controller
         $curl_response = curl_exec($curl);
         return $curl_response;
     }
+    /**
+     * Business To Customer (B2C)
+     * */
+    public function b2cRequest()
+    {
+        $ch = curl_init('https://sandbox.safaricom.co.ke/mpesa/b2c/v1/paymentrequest');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json', 'Authorization:Bearer ' . $this->generateAccessToken()));
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(array(
+            "InitiatorName" => "Derrick mbugua",
+            "SecurityCredential" => "jmQgwp14uBOT1O2iaqnlKcr4KQj6duEmSMSt5wPzuWnYbmV1whQXuXN4+977bNaaVlZN8lQQnQ85xmPshml4NVfe6XIPzx/H8SH3kUMPSK8tFIwDA5x9RiCOqkKBGoOm8D5CKnZp67nFqGcXspk8VkxJHVjPg4sXvXynIUCG6aqjEF78ZoZVZAedpIr7eXCgd24RsOx/5nEQJ8zYZqkcssXk1U6ZoxU7vrQm8XGWhYAWMzhtlwPVdi29SAkE/vzubjlisEQJPNgRVqMlbYSViGB8WRHJTah+BF7rtoSIB/7+/s//jX99EJKqyVO3F/AVYlGvZxDqvJ3BAUEbCJuw8Q==",
+            "CommandID" => "SalaryPayment",
+            "Amount" => 1,
+            "PartyA" => 600980,
+            "PartyB" => 254715153806,
+            "Remarks" => "Test remarks",
+            "QueueTimeOutURL" => "https://mydomain.com/b2c/queue",
+            "ResultURL" => "https://mydomain.com/b2c/result",
+            "Occassion" => "Good job",
+        )));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $response     = curl_exec($ch);
+        curl_close($ch);
+        echo $response;
+    }
+
+    /**
+     * Generate access token
+     * */
 
     public function generateAccessToken()
     {
@@ -70,6 +99,10 @@ class MpesaController extends Controller
         $access_token = json_decode($curl_response);
         return $access_token->access_token;
     }
+
+    /**
+     * Generate access token
+     * */
 
     public function token()
     {
@@ -125,10 +158,8 @@ class MpesaController extends Controller
     /**
      * M-pesa Register URLS
      */
-
     public function registerUrls()
     {
-
         $ch = curl_init('https://sandbox.safaricom.co.ke/mpesa/c2b/v1/registerurl');
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json', 'Authorization: Bearer ' . $this->generateAccessToken()));
         curl_setopt($ch, CURLOPT_POST, 1);

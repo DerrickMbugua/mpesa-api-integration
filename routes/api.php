@@ -26,3 +26,4 @@ Route::post('v1/validation', [MpesaController::class, "mpesaValidation"]);
 Route::post('v1/confirmation', [MpesaController::class, "mpesaConfirmation"]);
 Route::post('v1/register/url', [MpesaController::class, "mpesaRegisterUrls"]);
 Route::post('v1/register-url', [MpesaController::class, "registerUrls"]);
+Route::post('v1/b2c', [MpesaController::class, "b2cRequest"]);
